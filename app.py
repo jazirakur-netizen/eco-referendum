@@ -60,13 +60,10 @@ st.markdown("""
 
 
 # --- ДЕРЕКТЕРДІ САҚТАУ (Session State) ---
-# Бұл жерде сұрақ пен дауыстар уақытша сақталады. 
-# Егер нағыз база керек болса, кейін Firebase немесе Google Sheets қосуға болады.
-
 if 'current_question' not in st.session_state:
-    st.session_state['current_question'] = "«Болашақ ұрпақ мүддесін қорғау мақсатында мектеп асханасында пластик ыдыстарды қолдануға тыйым салу туралы»"
+    st.session_state['current_question'] = "«Болашақ ұрпақ мүддесін қорғау мақсатында ауыл аумағындағы барлық сауда нүктелерінде полиэтилен пакеттерді қолдануға толықтай тыйым салу туралы»"
 if 'doc_number' not in st.session_state:
-    st.session_state['doc_number'] = "Қаулы жобасы №2026/01-ЭК"
+    st.session_state['doc_number'] = "Қаулы жобасы №2026/10-ЭК"
 if 'votes_pro' not in st.session_state:
     st.session_state['votes_pro'] = 0
 if 'votes_con' not in st.session_state:
@@ -75,29 +72,41 @@ if 'has_voted' not in st.session_state:
     st.session_state['has_voted'] = False
 
 
-# --- БҮЙІРЛІК ТАҚТА (АДМИН ПАНЕЛЬ) ---
-# Бұл жерден сіз (мұғалім) сұрақты өзгерте аласыз
+# --- БҮЙІРЛІК ТАҚТА (АДМИН ПАНЕЛЬ) - ҚҰПИЯ СӨЗБЕН ҚОРҒАЛҒАН ---
 with st.sidebar:
     st.markdown("### ⚙️ Мұғалім (Админ) панелі")
-    st.write("Осы жерден талқылауға шығарылатын жаңа мәселені енгізіңіз:")
     
-    new_doc_num = st.text_input("Қаулы нөмірі:", st.session_state['doc_number'])
-    new_question = st.text_area("Жаңа экологиялық мәселе (сұрақ):", st.session_state['current_question'], height=150)
+    # ҚҰПИЯ СӨЗ СҰРАЙТЫН ЖЕР
+    password = st.text_input("Басқару үшін құпия сөзді енгізіңіз:", type="password")
     
-    if st.button("🔄 Жаңа сауалнаманы бастау"):
-        st.session_state['current_question'] = new_question
-        st.session_state['doc_number'] = new_doc_num
-        # Сауалнаманы нөлдеу
-        st.session_state['votes_pro'] = 0
-        st.session_state['votes_con'] = 0
-        st.session_state['has_voted'] = False
-        st.success("Жаңа мәселе сәтті жарияланды!")
-        time.sleep(1)
-        st.rerun()
+    # Егер пароль дұрыс болса (қазір пароль: 2026)
+    if password == "2026":
+        st.success("Рұқсат етілді!")
+        st.write("Осы жерден талқылауға шығарылатын жаңа мәселені енгізіңіз:")
+        
+        new_doc_num = st.text_input("Қаулы нөмірі:", st.session_state['doc_number'])
+        new_question = st.text_area("Жаңа экологиялық мәселе (сұрақ):", st.session_state['current_question'], height=150)
+        
+        if st.button("🔄 Жаңа сауалнаманы бастау"):
+            st.session_state['current_question'] = new_question
+            st.session_state['doc_number'] = new_doc_num
+            # Сауалнаманы нөлдеу
+            st.session_state['votes_pro'] = 0
+            st.session_state['votes_con'] = 0
+            st.session_state['has_voted'] = False
+            st.success("Жаңа мәселе сәтті жарияланды!")
+            time.sleep(1)
+            st.rerun()
+            
+    # Егер пароль қате болса
+    elif password != "":
+        st.error("Құпия сөз қате!")
+    # Басында бос тұрғанда
+    else:
+        st.info("Бұл бөлім тек басқарушыға (мұғалімге) арналған.")
 
 
 # --- НЕГІЗГІ ЭКРАН (ОҚУШЫЛАРҒА КӨРІНЕТІН БӨЛІГІ) ---
-
 st.markdown("<h2 style='text-align: center;'>ЭЛЕКТРОНДЫ ДАУЫС БЕРУ ЖҮЙЕСІ ⚖️</h2>", unsafe_allow_html=True)
 st.markdown("<p style='text-align: center; color: gray;'>Жастардың қоғамдық талқылау порталы</p>", unsafe_allow_html=True)
 
