@@ -74,7 +74,7 @@ except Exception:
 
 with st.sidebar:
     st.subheader("Навигация")
-    page = st.radio("Бөлім", ["Дауыс беру", "Мұғалім кабинеті"], label_visibility="collapsed")
+    page = st.radio("Бөлім", ["Дауыс беру", "Әкімші кабинеті"], label_visibility="collapsed")
     st.divider()
     st.write("**Анонимді қатысу**")
     st.caption("Аты-жөн, телефон, IP мекенжай қолданбаның дауыс кестесіне жазылмайды. "
@@ -113,7 +113,7 @@ if page == "Дауыс беру":
             "Өз көзқарасыңызды таңдаңыз — дұрыс не бұрыс жауап үшін баға қойылмайды.")
     if st.session_state.get("vote_success") == selected["id"]:
         st.success("Дауысыңыз ортақ дерекқорға сақталды. Қатысқаныңызға рақмет!")
-    st.caption("Мұғалімнен алған бірреттік кодты енгізіңіз. Пікірге өзіңіздің не өзгенің аты-жөнін жазбаңыз.")
+    st.caption("Әкімшіден алған бірреттік кодты енгізіңіз. Пікірге өзіңіздің не өзгенің аты-жөнін жазбаңыз.")
     with st.form(f'vote_{selected["id"]}', clear_on_submit=True):
         code = st.text_input("Бірреттік код", max_chars=40, placeholder="XXXX-XXXX-XXXX-XXXX")
         choice = st.radio("Сіздің шешіміңіз", ["pro", "con"], format_func=LABELS.get, index=None)
@@ -132,7 +132,7 @@ if page == "Дауыс беру":
     st.stop()
 
 # Recheck the password on each run; nothing privileged renders before this gate.
-st.header("Мұғалім кабинеті")
+st.header("Әкімші кабинеті")
 st.caption("Дауыс беру нәтижелері мен оқушылардың пікірлері тек осы бөлімде көрсетіледі.")
 if st.session_state.get("admin_value") != admin_password:
     with st.form("login", clear_on_submit=True):
