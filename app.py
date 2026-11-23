@@ -11,20 +11,36 @@ from reporting import LABELS, csv_bytes, summary_rows
 
 st.set_page_config(page_title="Эко-референдум", page_icon="🌿", layout="wide")
 st.markdown("""<style>
-.stApp { background: #f3f7fb; }
-.block-container { max-width: 1080px; padding-top: 2.3rem; }
-h1, h2, h3 { color: #153b60; }
-[data-testid="stSidebar"] { background: #e7eff7; }
-[data-testid="stMetric"] { background: white; padding: 18px; border-radius: 12px;
-    border-top: 3px solid #19866b; }
-.portal { background: #123958; color: white; border-radius: 14px; padding: 25px 30px;
-    border-bottom: 5px solid #29b798; margin-bottom: 24px; }
-.portal h1 { color: white; font-size: 2rem; margin: 0; }
-.portal p { color: #d4e7f4; margin: 8px 0 0; }
-div.stButton > button, div.stFormSubmitButton > button { min-height: 46px; }
+.stApp{background:#f5f8f6;color:#173a35}
+.block-container{max-width:1160px;padding-top:2rem;padding-bottom:4rem}
+h1,h2,h3{color:#123e37;letter-spacing:-.025em}
+[data-testid="stSidebar"]{background:#e8f0ec;border-right:1px solid #d4e2da}
+[data-testid="stSidebar"] h3{font-size:1.25rem}
+.portal{position:relative;background:linear-gradient(120deg,#123e37,#205b50);color:white;border-radius:24px;padding:38px 42px;margin-bottom:18px;overflow:hidden;border-bottom:5px solid #d6b66b}
+.portal:after{content:"";position:absolute;right:-50px;top:-100px;width:300px;height:300px;border:45px solid #ffffff09;border-radius:50%;pointer-events:none}
+.portal .eyebrow{color:#e6cd8d;font-size:14px;letter-spacing:.12em;font-weight:700}
+.portal h1{color:#fff;font-size:clamp(2rem,5vw,3.5rem);margin:12px 0;line-height:1.1}
+.portal p{color:#e2eee8;max-width:660px;font-size:18px;line-height:1.6}
+.journey{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 30px}
+.journey div{padding:18px 20px;border-left:3px solid #b99a53;background:#fff;border-radius:0 12px 12px 0}
+.journey b{display:block;color:#184e42;font-size:17px;margin-bottom:5px}
+.journey span{color:#536b63;font-size:15px}
+[data-testid="stForm"]{background:#fff;border:1px solid #cfdfd5;border-radius:20px;padding:26px}
+[data-testid="stMetric"]{background:#fff;padding:22px;border-radius:16px;border:1px solid #d8e5dd;border-top:4px solid #26765e}
+[data-testid="stMetricValue"]{color:#145844}
+div.stButton>button,div.stFormSubmitButton>button,div.stDownloadButton>button{min-height:48px;border-radius:12px;font-weight:600}
+button[kind="primary"]{background:#17674f;color:#fff;border-color:#17674f}
+button[kind="primary"]:hover{background:#0f4c39;border-color:#0f4c39;color:white}
+[data-testid="stTextInput"] input,[data-testid="stTextArea"] textarea{background:#fbfdfb;color:#173a35}
+[data-testid="stExpander"]{background:white;border-radius:14px}
+[data-testid="stAlert"]{border-radius:12px}
+@media(max-width:640px){.portal{padding:26px 22px}.journey{grid-template-columns:1fr;gap:8px}.block-container{padding-top:1rem}[data-testid="stForm"]{padding:16px}}
 </style>
-<div class="portal"><h1>ЭКО-РЕФЕРЕНДУМ</h1>
-<p>Бүгінгі таңдау — болашақ ұрпақ алдындағы жауапкершілік</p></div>""", unsafe_allow_html=True)
+<div class="portal"><div class="eyebrow">ПІКІР • ДӘЛЕЛ • ЖАУАПКЕРШІЛІК</div>
+<h1>Эко-референдум</h1>
+<p>Сіздің таңдауыңыз.<br>Келешек ұрпақтың мүмкіндігі.</p>
+<p>Экологиялық мәселені талқылаңыз, өз ұстанымыңызды негіздеңіз және дауыс беріңіз.</p></div>
+""", unsafe_allow_html=True)
 st.caption("Мектепішілік ғылыми жоба • Оқу мақсатындағы қоғамдық талқылау • Мемлекеттік қызмет емес")
 
 
@@ -73,7 +89,7 @@ except Exception:
     st.stop()
 
 with st.sidebar:
-    st.subheader("Навигация")
+    st.subheader("🌿 Эко-референдум")
     page = st.radio("Бөлім", ["Дауыс беру", "Әкімші кабинеті"], label_visibility="collapsed")
     st.divider()
     st.write("**Анонимді қатысу**")
@@ -101,6 +117,7 @@ def local_date(value):
 
 
 if page == "Дауыс беру":
+    st.markdown('<div class="journey"><div><b>Мәселені түсініңіз</b><span>Пайдасы мен ықтимал зиянын салыстырыңыз.</span></div><div><b>Ұстаным таңдаңыз</b><span>Келешек ұрпақтың мүддесін ескеріңіз.</span></div><div><b>Ойыңызды негіздеңіз</b><span>Бірреттік кодпен дауысыңызды жіберіңіз.</span></div></div>', unsafe_allow_html=True)
     active = call(db.list_polls, engine, True)
     if st.button("Сауалнамалар тізімін жаңарту"):
         st.rerun()
@@ -248,3 +265,4 @@ if poll["is_open"]:
         if st.button("Дауыс беруді аяқтау", disabled=not confirm):
             call(db.close_poll, engine, poll["id"])
             st.rerun()
+
