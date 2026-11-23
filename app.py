@@ -35,6 +35,34 @@ button[kind="primary"]:hover{background:#0f4c39;border-color:#0f4c39;color:white
 [data-testid="stExpander"]{background:white;border-radius:14px}
 [data-testid="stAlert"]{border-radius:12px}
 @media(max-width:640px){.portal{padding:26px 22px}.journey{grid-template-columns:1fr;gap:8px}.block-container{padding-top:1rem}[data-testid="stForm"]{padding:16px}}
+
+/* Larger, readable typography and a richer soft background. */
+html,body,[data-testid="stApp"]{font-size:18px}
+.stApp{background:radial-gradient(ellipse at 92% 8%,#d5e9de 0,transparent 42%),radial-gradient(ellipse at 12% 70%,#f5edcf 0,transparent 35%),#f3f8f4}
+[data-testid="stAppViewContainer"]{background:transparent}
+.block-container{max-width:1240px}
+[data-testid="stMarkdownContainer"] p,[data-testid="stMarkdownContainer"] li{font-size:1.08rem;line-height:1.75}
+[data-testid="stCaptionContainer"] p{font-size:.92rem!important;line-height:1.65;color:#476158}
+[data-testid="stWidgetLabel"] p{font-size:1.05rem!important;font-weight:600;color:#214b3e}
+[data-testid="stSidebar"]{background:linear-gradient(160deg,#dbece2,#f2f7ee);border-right:1px solid #bfd6c7}
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p{font-size:1rem}
+[data-testid="stSidebar"] label p{font-size:1.05rem!important}
+.portal{padding:42px 44px;box-shadow:0 15px 40px #194c3520;background:radial-gradient(ellipse at 95% 0%,#44856a 0,transparent 60%),linear-gradient(120deg,#103d35,#1b5d4b)}
+.portal h1{font-size:clamp(2.5rem,5vw,3.8rem);font-weight:800}
+.portal p{font-size:1.2rem!important;line-height:1.65;max-width:800px}
+.portal .eyebrow{font-size:.95rem;letter-spacing:.1em}
+h2{font-size:2rem!important}h3{font-size:1.5rem!important}
+.journey b{font-size:1.1rem}.journey span{font-size:1rem;line-height:1.6}
+[data-testid="stForm"]{box-shadow:0 10px 28px #204d3510;border:1px solid #c5dacb}
+[data-testid="stTextInput"] input,[data-testid="stTextArea"] textarea{font-size:1.08rem!important;line-height:1.65}
+[data-testid="stTextInput"] input{min-height:52px}
+[data-testid="stTextArea"] textarea{min-height:140px}
+div.stButton>button,div.stFormSubmitButton>button,div.stDownloadButton>button{min-height:52px;padding:.65rem 1.15rem}
+div.stButton>button p,div.stFormSubmitButton>button p,div.stDownloadButton>button p{font-size:1rem!important;font-weight:700}
+[data-testid="stBaseButton-primary"],button[kind="primary"]{background-color:#17674f!important;border-color:#17674f!important;color:#fff!important}
+[data-testid="stBaseButton-primary"]:hover{background-color:#104c3a!important;border-color:#104c3a!important}
+@media(max-width:640px){html,body,[data-testid="stApp"]{font-size:16px}.portal{padding:28px 22px}.portal h1{font-size:2.5rem}.portal p{font-size:1.1rem!important}}
+
 </style>
 <div class="portal"><div class="eyebrow">ПІКІР • ДӘЛЕЛ • ЖАУАПКЕРШІЛІК</div>
 <h1>Эко-референдум</h1>
@@ -265,4 +293,5 @@ if poll["is_open"]:
         if st.button("Дауыс беруді аяқтау", disabled=not confirm):
             call(db.close_poll, engine, poll["id"])
             st.rerun()
+
 
